@@ -24,4 +24,5 @@ Overall, I focused on getting the required functionality working reliably and va
 ## 5. AI Conversations
 
 - Claude: https://claude.ai/share/28ad1eeb-4966-47ba-a825-28fe3145197c
-- Framer Agent: Link not available
+  - the first prompt might not be available since it was too long and Claude converts it into the file. I have uploaded it here manually: [first-prompt.txt](https://github.com/soham2k06/skillpath/blob/main/first-prompt.txt)
+- Framer Agent: Does not provide sharing
