@@ -1,0 +1,148 @@
+I'm implementing the Courses section of a Framer task assignment.
+
+The Hero and Footer are already built in Framer. I only need the Courses section as a Framer React Code Component.
+I want you to implement the component end-to-end in one response.
+
+## API
+
+Base URL: https://syncsphere-hiv6.onrender.com
+
+Course data:
+GET /assignment/course-data
+
+Country:
+GET /assignment/country-code
+
+No authentication is required.
+
+### Course data response
+
+Returns an array of 5–10 courses. The count can change between requests.
+
+Example:
+```json
+{
+  "courseName": "How To YouTube",
+  "courseCode": "how-to-youtube",
+  "description": "From concept to creation, learn how to build, grow, and monetize a YouTube channel using practical systems and real-world execution.",
+  "mainCategory": "Content Creation",
+  "shortCourse": "YouTube",
+  "courseType": "Original",
+  "pricePaise": 199900,
+  "priceUsdCents": 3999,
+  "mangoId": "a1b2c3d4e5f6789012345678",
+  "refundable": true
+}
+```
+
+### Country response
+
+Returns either:
+```json
+{ "country_code": "IN" }
+```
+or:
+```json
+{ "country_code": "US" }
+```
+
+Pricing rules:
+
+* IN → use `pricePaise` and convert paise to rupees
+* US → use `priceUsdCents` and convert cents to dollars
+
+For example:
+
+* `199900` paise → `₹1,999`
+* `3999` cents → `$39.99`
+
+Make sure paise/cents are not displayed as whole currency units.
+
+## API failures
+
+The APIs are intentionally failing often. Around 1 in 3 requests to either endpoint may return a 404 or 500.
+
+For example, a 500 response could look like:
+
+```json
+{
+  "detail": "this aint working dawg"
+}
+```
+
+The `detail` value is not fixed and can contain different server-generated text.
+Do not show the API's `detail` value, raw response body, raw error object, or technical error message to the user.
+Instead, show a simple user-facing message such as:
+"We couldn't load the courses. Please try again."
+A retry button would be useful if it can be added without making the implementation unnecessarily complicated.
+The component should handle:
+* initial loading
+* zero courses
+* 404
+* 500
+* network failure
+* malformed or unexpected API responses
+
+The two API requests should also be handled independently.
+
+For example:
+* course-data succeeds but country-code fails
+* country-code succeeds but course-data fails
+
+If one request fails, don't unnecessarily throw away valid data from the other request.
+
+Only make GET requests.
+
+## UI
+
+Build a clean, modern learning-platform course grid that fits into an existing Skillpath landing page.
+Each course card should show:
+* course name
+* description, limited cleanly to 2 lines
+* correctly formatted price
+* main category
+
+A small "Refundable" badge can be shown when `refundable` is true if it fits the design.
+The number of cards is dynamic. Do not assume there will always be a fixed number of courses.
+
+Responsive behavior:
+
+* desktop: 3 columns
+* tablet: 2 columns
+* mobile: 1 column
+
+The layout should use responsive CSS/layout rather than absolute positioning.
+It should work correctly for any number of courses between 5 and 10.
+
+## Integration
+
+Use TypeScript.
+Do not use `any`.
+The component should fetch its own data and should not contain hardcoded course data.
+Add exactly two useful Framer property controls that a designer could realistically change.
+* card radius
+* card gap
+
+## Architecture
+
+Use proper TypeScript types for:
+* course data
+* country response
+* component state
+* errors
+
+Keep these stuff separate:
+* fetching course data
+* fetching country data
+* formatting prices
+* rendering loading/error/empty states
+* rendering course cards
+
+Do not over-engineer it.
+
+## Additional features
+* skeleton loading
+* retry button
+* refundable badge
+
+Reliability and clarity are more important than adding extra features.
